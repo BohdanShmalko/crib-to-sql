@@ -106,6 +106,29 @@ GROUP BY product.name
 ORDER BY COUNT(product.name) DESC;
 ```
 <img src = "answ4.PNG"/></br>
+
+5. Отримати звіт по поставленій кількості тортів
+```sql
+SELECT product.name AS 'Товар (торти)',
+COUNT(delivery.product) AS 'Кількість поставлених одиниць'
+FROM delivery, product
+WHERE delivery.product = product.id
+AND product.name LIKE '%торт%'
+GROUP BY product.name
+ORDER BY COUNT(product.name) DESC;
+```
+АБО
+```sql
+SELECT product.name AS 'Товар (торти)',
+COUNT(delivery.product) AS 'Кількість поставлених одиниць'
+FROM delivery
+INNER JOIN product ON
+delivery.product = product.id
+AND product.name LIKE '%торт%'
+GROUP BY product.name
+ORDER BY COUNT(product.name) DESC;
+```
+<img src = "answ5.PNG"/></br>
 <!--
 ```sql
 
