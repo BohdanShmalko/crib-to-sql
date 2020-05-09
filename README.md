@@ -7,7 +7,4 @@
 4. DROP TABLE &table_name&; - видалити таблицю
 5. ALTER TABLE &table_name& ADD &field_name& &type_field&; - добавити поле до таблиці
 6. ALTER TABLE &table_name& DROP COLUMN &field_name&; - удалить поле з таблиці
-
-
-
 ```
