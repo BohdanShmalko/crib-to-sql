@@ -2,8 +2,8 @@
 
 ### Бази данних
 
-<img src = "data1.PNG"/></br>
-<img src = "data2.PNG"/></br>
+<img src = "./images/data1.PNG"/></br>
+<img src = "./images/data2.PNG"/></br>
 
 ### Завдання
 1. Отримати звіт про кількість поставок по кожному з постачальників
@@ -30,7 +30,7 @@ product.producer=producer.id
 GROUP BY producer.name
 ORDER BY COUNT(producer.name) DESC;
 ```
-<img src = "answ1.PNG"/></br>
+<img src = "./images/answ1.PNG"/></br>
 
 2. Отримати звіт по товарам з найвищою ціною поставки в діапазоні 50..100 грн
 ```sql
@@ -53,7 +53,7 @@ WHERE delivery.price BETWEEN 50 AND 100
 ORDER BY delivery.price DESC
 LIMIT 1;
 ```
-<img src = "answ2.PNG"/></br>
+<img src = "./images/answ2.PNG"/></br>
 
 3. Отримати звіт по постачальникам та загальній кількості проданих одиниць товару
 ```sql
@@ -77,7 +77,7 @@ product.producer = producer.id
 GROUP BY producer.name
 ORDER BY COUNT(producer.name) DESC;
 ```
-<img src = "answ3.PNG"/></br>
+<img src = "./images/answ3.PNG"/></br>
 
 4. Для постачальника "тов пекар" отримати звіт по поставленим товарам та загальній вартості
 ```sql
@@ -105,7 +105,7 @@ WHERE producer.name = 'тов пекар'
 GROUP BY product.name
 ORDER BY COUNT(product.name) DESC;
 ```
-<img src = "answ4.PNG"/></br>
+<img src = "./images/answ4.PNG"/></br>
 
 5. Отримати звіт по поставленій кількості тортів
 ```sql
@@ -128,7 +128,46 @@ AND product.name LIKE '%торт%'
 GROUP BY product.name
 ORDER BY COUNT(product.name) DESC;
 ```
-<img src = "answ5.PNG"/></br>
+<img src = "./images/answ5.PNG"/></br>
+
+6. Отримати загальну вартість поставок постачальника "тов пекар"
+```sql
+SELECT SUM(delivery.quantity * delivery.price)
+AS 'Загальна вартість поставок "тов пекар"'
+FROM delivery,product,producer
+WHERE delivery.product = product.id
+AND product.producer = producer.id
+AND producer.name = 'тов пекар';
+```
+АБО
+```sql
+SELECT SUM(delivery.quantity * delivery.price)
+AS 'Загальна вартість поставок "тов пекар"'
+FROM delivery
+INNER JOIN product ON
+delivery.product = product.id
+INNER JOIN producer ON
+product.producer = producer.id
+AND producer.name = 'тов пекар';
+```
+<img src = "./images/answ6.PNG"/></br>
+
+7. Отримати перелік товарів, поставлених до 07.09.2019
+```sql
+SELECT product.name AS 'Товар (поставки до 07.09.2019)'
+FROM delivery, product
+WHERE delivery.product = product.id
+AND delivery.date < '2019-09-07';
+```
+АБО
+```sql
+SELECT product.name AS 'Товар (поставки до 07.09.2019)'
+FROM delivery
+INNER JOIN product ON
+delivery.product = product.id
+WHERE delivery.date < '2019-09-07';
+```
+<img src = "./images/answ7.PNG"/></br>
 <!--
 ```sql
 
@@ -137,5 +176,5 @@ ORDER BY COUNT(product.name) DESC;
 ```sql
 
 ```
-<img src = "answ.PNG"/></br>
+<img src = "./images/answ.PNG"/></br>
 -->
