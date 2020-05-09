@@ -2,7 +2,7 @@
 
 ### Бази данних
 
-<img src = "data1.png"/></br>
+<img src = "./data1.png"/></br>
 <img src = "data2.png"/></br>
 
 ### Завдання
