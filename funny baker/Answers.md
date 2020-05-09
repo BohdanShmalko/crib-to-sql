@@ -78,6 +78,34 @@ GROUP BY producer.name
 ORDER BY COUNT(producer.name) DESC;
 ```
 <img src = "answ3.PNG"/></br>
+
+4. Для постачальника "тов пекар" отримати звіт по поставленим товарам та загальній вартості
+```sql
+SELECT product.name AS 'Товар (тов пекар)',
+SUM(delivery.price * delivery.quantity)
+AS 'Загальна вартість (грн)'
+FROM product, delivery, producer
+WHERE delivery.product = product.id
+AND producer.id = product.producer
+AND producer.name = 'тов пекар'
+GROUP BY product.name
+ORDER BY COUNT(product.name) DESC;
+```
+АБО
+```sql
+SELECT product.name AS 'Товар (тов пекар)',
+SUM(delivery.price * delivery.quantity)
+AS 'Загальна вартість (грн)'
+FROM delivery
+INNER JOIN product ON
+delivery.product = product.id
+INNER JOIN producer ON
+product.producer = producer.id
+WHERE producer.name = 'тов пекар'
+GROUP BY product.name
+ORDER BY COUNT(product.name) DESC;
+```
+<img src = "answ4.PNG"/></br>
 <!--
 ```sql
 
