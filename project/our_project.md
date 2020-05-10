@@ -3,7 +3,7 @@
 
 ## База даних
 
-<img src = './images/database.PNG'/>
+<img src = './images/database.png'/>
 
 ### Progect
 <img src = './images/project.PNG'/>
