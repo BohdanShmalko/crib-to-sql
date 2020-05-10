@@ -251,11 +251,13 @@ ORDER BY sale.cost DESC LIMIT 1;
 
 12. Отримати перелік неліквідних товарів (тих, що не продаються)
 ```sql
-?
-```
-АБО
-```sql
-?
+SELECT product.name AS 'Неліквідний товар'
+FROM product
+LEFT JOIN sale ON
+sale.product = product.id
+LEFT JOIN delivery ON
+delivery.product = product.id
+WHERE sale.quantity IS NULL
 ```
 <img src = "./images/answ12.PNG"/></br>
 
