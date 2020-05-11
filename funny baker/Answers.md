@@ -280,21 +280,65 @@ ORDER BY delivery.price LIMIT 3
 
 14. Отримати звіт про залишки товарів (різницю між кількістю поставлених та проданих одиниць товарів) за весь звітний період.
 ```sql
-?
-```
-АБО
-```sql
-?
+SELECT product.name AS 'Продукт',
+SUM(p.quant) AS 'Залишок'
+FROM (
+    SELECT delivery.product,
+    SUM(delivery.quantity) AS quant
+    FROM delivery
+    GROUP BY delivery.product
+    UNION
+    SELECT sale.product,
+    -SUM(sale.quantity)
+    FROM sale
+    GROUP BY sale.product
+) AS p
+INNER JOIN product ON
+p.product = product.id
+GROUP BY product.name
+ORDER BY SUM(p.quant) DESC;
+SELECT product.name AS 'Продукт',
+SUM(p.quant) AS 'Залишок'
+FROM (
+    SELECT delivery.product,
+    SUM(delivery.quantity) AS quant
+    FROM delivery
+    GROUP BY delivery.product
+    UNION
+    SELECT sale.product,
+    -SUM(sale.quantity)
+    FROM sale
+    GROUP BY sale.product
+) AS p
+INNER JOIN product ON
+p.product = product.id
+GROUP BY product.name
+ORDER BY SUM(p.quant) DESC;
+
 ```
 <img src = "./images/answ14.PNG"/></br>
 
 15. Знайти товари, для яких здійснюються необліковані продажі (кількість поставлених товарів менша ніж кількість проданих).
 ```sql
-?
-```
-АБО
-```sql
-?
+SELECT ena.name FROM(
+    SELECT product.name,
+    SUM(p.quant) AS s
+    FROM (
+        SELECT delivery.product,
+        SUM(delivery.quantity) AS quant
+        FROM delivery
+        GROUP BY delivery.product
+        UNION
+        SELECT sale.product,
+        -SUM(sale.quantity)
+        FROM sale
+        GROUP BY sale.product
+    ) AS p
+    INNER JOIN product ON
+    p.product = product.id
+    GROUP BY product.name
+    ORDER BY SUM(p.quant) DESC) AS ena
+WHERE s < 0;
 ```
 <img src = "./images/answ15.PNG"/></br>
 
@@ -317,11 +361,28 @@ producer.location = location.id;
 
 17. Отримати звіт про товари, що приносять найбільший прибуток
 ```sql
-?
-```
-АБО
-```sql
-?
+SELECT product.name AS 'Товар (найбільший ймовірний прибуток)',
+producer.name AS 'Постачальник'
+FROM(
+    SELECT prubutok.product,
+    SUM(prubutok.costs) AS rizn
+    FROM (
+        SELECT sale.product,
+        MIN(sale.cost) AS costs
+        FROM sale
+        GROUP BY sale.product
+        UNION
+        SELECT delivery.product,
+        -MAX(delivery.price)
+        FROM delivery
+        GROUP BY delivery.product
+    ) as prubutok
+    GROUP BY prubutok.product
+    ORDER BY rizn DESC LIMIT 1) AS tr
+INNER JOIN product ON
+tr.product = product.id
+INNER JOIN producer ON
+product.producer = producer.id
 ```
 <img src = "./images/answ17.PNG"/></br>
 
