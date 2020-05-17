@@ -429,3 +429,30 @@ GROUP BY location.name
 ORDER BY COUNT(producer.name) DESC;
 ```
 <img src = "./images/answ19.PNG"/></br>
+
+20. Отримати хронологічно впорядкований звіт про витрати та доходи поденно (для тих днів, коли здійснювалися поставки та/або продажі) за весь період
+```sql
+select ifnull(a.date, 0) as Дата,
+ifnull(a.d, 0) as Витрати,
+ifnull(b.s, 0) as Дохід
+from (select Delivery.date as date,
+sum(Delivery.price * Delivery.quantity) as d
+from Delivery
+group by Delivery.date) as a
+left join (select Sale.date,
+sum(Sale.cost * Sale.quantity) as s
+from Sale
+group by Sale.date) as b on a.date = b.date
+UNION ALL
+select ifnull(b.date, 0) as Дата,
+ifnull(a.d, 0) as Витрати,
+ifnull(b.s, 0) as Дохід
+from (select Delivery.date as date,
+sum(Delivery.price * Delivery.quantity) as d
+from Delivery
+group by Delivery.date) as a
+right join (select Sale.date,
+sum(Sale.cost * Sale.quantity) as s
+from Sale
+group by Sale.date) as b on a.date = b.date
+```
