@@ -92,28 +92,27 @@ INNER JOIN worker ON
 5. Створити таблицю відповідностей імені проекту, імені завдання, та останный статус завдання **
 
 ```sql
-USE our_project;
-SELECT * FROM
-(SELECT project_property.value AS name_proect,
-	     task_property.value AS name_task,
-		state.description AS last_state
- FROM project
- INNER JOIN project_property ON
- project_property.Project_id = project.id
- INNER JOIN task ON
- task.Project_id = project.id
- INNER JOIN task_property ON
- task_property.Task_id = task.id
- INNER JOIN event ON
- event.Task_id = task.id
-  INNER JOIN state ON
- event.State_id = state.id
- WHERE project_property.key = 'Name' AND
- task_property.key = 'Name') as ab
- WHERE name_task =
- (SELECT max(name_task) from ab)
-
-
+select a.name,
+b.valu,
+state.description
+from
+(SELECT project_property.value as name,
+project_property.Project_id as pr
+from project_property
+where project_property.key = 'Name'
+group by project_property.Project_id) as a
+join task on a.pr = task.Project_id
+join (select task_property.value as valu,
+task_property.Task_id as task
+from task_property
+where task_property.key = 'Name') as b on b.task = task.id
+join (select event.Task_id as task, event.State_id as state
+from event
+join (select event.Task_id as task,
+ max(event.id) as id
+from event
+group by event.Task_id) as max on max.id = event.id) as state1 on state1.task = task.id
+join state on state1.state = state.id
 ```
 
 <img src = './images/exercises/exercise5.PNG'/>
