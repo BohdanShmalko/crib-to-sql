@@ -147,3 +147,27 @@ join worker on event.Worker_id = worker.id) as work on work.id = task.id
 ```
 
 <img src = './images/exercises/exercise6.PNG'/>
+
+7. Співставити працівника до його посади у проекті Run App iOS
+
+```sql
+USE our_project;
+SELECT worker.name AS 'Імя працівника',
+role.name AS 'Посада'
+FROM association
+INNER JOIN worker ON
+worker.id = association.Worker_id
+INNER JOIN role ON
+role.id = association.Role_id
+INNER JOIN task ON
+task.id = association.Task_id
+INNER JOIN project ON
+project.id = task.Project_id
+INNER JOIN project_property ON
+project_property.Project_id = project.id
+WHERE project_property.key = 'Name' AND
+project_property.value = 'Run App iOS';
+
+```
+
+<img src = './images/exercises/exercise7.PNG'/>
