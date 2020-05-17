@@ -231,21 +231,18 @@ ORDER BY AVG(delivery.price) DESC;
 
 11. Отримати перелік постачальників, чиї товари реалізуються за найвищою ціною
 ```sql
-SELECT producer.name AS 'Постачальник (найвища ціна реалізації товару)'
-FROM sale, product, producer
-WHERE sale.product = product.id
-AND product.producer = producer.id
-ORDER BY sale.cost DESC LIMIT 1;
-```
-АБО
-```sql
-SELECT producer.name AS 'Постачальник (найвища ціна реалізації товару)'
-FROM sale
+SELECT p.prod AS 'Постачальник (найвища ціна реалізації товару)'
+FROM(
+SELECT producer.name AS prod,
+SUM(sale.cost)
+FROM producer
 INNER JOIN product ON
-sale.product = product.id
-INNER JOIN producer ON
 product.producer = producer.id
-ORDER BY sale.cost DESC LIMIT 1;
+INNER JOIN sale ON
+sale.product = product.id
+GROUP BY 1
+ORDER BY 2 DESC) AS p
+LIMIT 1;
 ```
 <img src = "./images/answ11.PNG"/></br>
 
