@@ -1,39 +1,39 @@
 ## Реляційна схема
-<img src = './images/diagram.png'/>
+<img src = './images/our_project/diagram.png'/>
 
 ## База даних
 
-<img src = './images/database.png'/>
+<img src = './images/our_project/database.png'/>
 
 ### Progect
-<img src = './images/project.PNG'/>
+<img src = './images/our_project/project.PNG'/>
 
 ### Project_Property
-<img src = './images/project_property.PNG'/>
+<img src = './images/our_project/project_property.PNG'/>
 
 ### Task
-<img src = './images/task.PNG'/>
+<img src = './images/our_project/task.PNG'/>
 
 ### Task_Property
-<img src = './images/task_property.PNG'/>
+<img src = './images/our_project/task_property.PNG'/>
 
 ### Report
-<img src = './images/report.PNG'/>
+<img src = './images/our_project/report.PNG'/>
 
 ### Report_Property
-<img src = './images/report_property.PNG'/>
+<img src = './images/our_project/report_property.PNG'/>
 
 ### Event
-<img src = './images/event.PNG'/>
+<img src = './images/our_project/event.PNG'/>
 
 ### State
-<img src = './images/state.PNG'/>
+<img src = './images/our_project/state.PNG'/>
 
 ### Association
-<img src = './images/association.PNG'/>
+<img src = './images/our_project/association.PNG'/>
 
 ### Worker
-<img src = './images/worker.PNG'/>
+<img src = './images/our_project/worker.PNG'/>
 
 ### State
-<img src = './images/state.PNG'/>
+<img src = './images/our_project/state.PNG'/>
