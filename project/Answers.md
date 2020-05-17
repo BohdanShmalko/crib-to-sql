@@ -113,15 +113,38 @@ SELECT * FROM
  WHERE name_task =
  (SELECT max(name_task) from ab)
 
- 
+
 ```
 
 <img src = './images/exercises/exercise5.PNG'/>
 
-6. Створити таблицю відповідностей імені імені проекту, імені завдання, останный статус завдання, та ролі працівника **
+6. Створити таблицю відповідностей імені проекту, імені завдання, останный статус завдання, та ролі працівника **
 
 ```sql
-
+USE our_project;
+select a.name,
+b.valu,
+work.name
+from
+(SELECT project_property.value as name,
+project_property.Project_id as pr
+from project_property
+where project_property.key = 'Name'
+group by project_property.Project_id) as a
+join task on a.pr = task.Project_id
+join (select task_property.value as valu,
+task_property.Task_id as task
+from task_property
+where task_property.key = 'Name') as b on b.task = task.id
+join (select event.Task_id as task, event.State_id as state, event.id as event
+from event
+join (select event.Task_id as task,
+ max(event.id) as id
+from event
+group by event.Task_id) as max on max.id = event.id) as state1 on state1.task = task.id
+join (select event.id as id, worker.name as name
+from event
+join worker on event.Worker_id = worker.id) as work on work.id = task.id
 ```
 
 <img src = './images/exercises/exercise6.PNG'/>
