@@ -453,3 +453,19 @@ sum(Sale.cost * Sale.quantity) as s
 from Sale
 group by Sale.date) as b on a.date = b.date
 ```
+АБО
+```sql
+select dates.date as 'Дата',
+    ifnull(sum(d.price * d.quantity), 0) as 'Витрати',
+    ifnull(sum(s.cost * s.quantity), 0) as 'Дохід'
+from
+    (select d.date as date
+    from delivery d
+    union
+    select s.date as date
+    from sale s) as dates
+left join delivery d on d.date = dates.date
+left join sale s on s.date = dates.date
+group by 1
+order by 1
+```
