@@ -244,6 +244,15 @@ GROUP BY 1
 ORDER BY 2 DESC) AS p
 LIMIT 1;
 ```
+АБО
+```sql
+SELECT DISTINCT producer.name as
+'Постачальник(найвища ціна реалізації товару)'
+FROM sale, product, producer where
+sale.product = product.id
+and product.producer = producer.id
+and cost = (SELECT MAX(cost) FROM SALE)
+```
 <img src = "./images/answ11.PNG"/></br>
 
 12. Отримати перелік неліквідних товарів (тих, що не продаються)
