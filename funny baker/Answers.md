@@ -429,6 +429,8 @@ ORDER BY COUNT(producer.name) DESC;
 
 20. Отримати хронологічно впорядкований звіт про витрати та доходи поденно (для тих днів, коли здійснювалися поставки та/або продажі) за весь період
 ```sql
+select distinct *
+from(
 select ifnull(a.date, 0) as Дата,
 ifnull(a.d, 0) as Витрати,
 ifnull(b.s, 0) as Дохід
@@ -451,7 +453,7 @@ group by Delivery.date) as a
 right join (select Sale.date,
 sum(Sale.cost * Sale.quantity) as s
 from Sale
-group by Sale.date) as b on a.date = b.date
+group by Sale.date) as b on a.date = b.date) as result
 ```
 АБО
 ```sql
